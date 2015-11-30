@@ -1,57 +1,64 @@
 matkul {
-	nama : if001;
-	sks : 2;
-	available : true;
+	nama: if001
+	prereq :
+	sks : 2
+	available : true
 }
 matkul {
-	nama : if002;
-	sks : 1;
-	available : true;
+	nama : if002
+	prereq :
+	sks : 1
+	available : true
 }
 matkul {
-	nama : if003;
-	sks : 2;
-	available : true;
+	nama : if003
+	prereq :
+	sks : 2
+	available : true
 }
 matkul {
-	nama : if004;
-	prereq : if001, if002;
-	sks : 3;
-	available : true;
+	nama : if004
+	prereq : if001 if002
+	sks : 3
+	available : true
 }
 matkul {
-	nama : if005;
-	sks : 3;
-	available : true;
+	nama : if005
+	prereq :
+	sks : 3
+	available : true
 }
 matkul {
-	nama : if006;
-	sks : 3;
-	available : true;
+	nama : if006
+	prereq :
+	sks : 3
+	available : true
 }
 matkul {
-	nama : if007;
-	prereq : if004;
-	sks : 4;
-	available : true;
+	nama : if007
+	prereq : if004
+	sks : 4
+	available : true
 } 
 matkul {
-	nama : if008;
-	sks : 2;
-	available : true;
+	nama : if008
+	prereq :
+	sks : 2
+	available : true
 }
 matkul {
-	nama : if009;
-	sks : 1;
-	available : true;
+	nama : if009
+	prereq :
+	sks : 1
+	available : true
 }
 matkul {
-	nama : if010;
-	prereq : if003, if007;
-	sks : 4;
-	available : true;
+	nama : if010
+	prereq : if003 if007
+	sks : 4
+	available : true
 }
-sksmax 22
+sksmax : 22
 kelas {
 	kode : 1;
 	matkul : if001;
