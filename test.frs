@@ -1,0 +1,109 @@
+matkul {
+	nama : if001;
+	sks : 2;
+	available : true;
+}
+matkul {
+	nama : if002;
+	sks : 1;
+	available : true;
+}
+matkul {
+	nama : if003;
+	sks : 2;
+	available : true;
+}
+matkul {
+	nama : if004;
+	prereq : if001, if002;
+	sks : 3;
+	available : true;
+}
+matkul {
+	nama : if005;
+	sks : 3;
+	available : true;
+}
+matkul {
+	nama : if006;
+	sks : 3;
+	available : true;
+}
+matkul {
+	nama : if007;
+	prereq : if004;
+	sks : 4;
+	available : true;
+} 
+matkul {
+	nama : if008;
+	sks : 2;
+	available : true;
+}
+matkul {
+	nama : if009;
+	sks : 1;
+	available : true;
+}
+matkul {
+	nama : if010;
+	prereq : if003, if007;
+	sks : 4;
+	available : true;
+}
+sksmax 22
+kelas {
+	kode : 1;
+	matkul : if001;
+	kapasitas : 50;
+}
+kelas {
+	kode : 2;
+	matkul : if001;
+	kapasitas : 50;
+}
+kelas {
+	kode : 1;
+	matkul : if002;
+	kapasitas : 100;
+}
+kelas {
+	kode : 1;
+	matkul : if003;
+	kapasitas : 100;
+}
+kelas {
+	kode : 1;
+	matkul : if004;
+	kapasitas : 100;
+}
+kelas {
+	kode : 1;
+	matkul : if005;
+	kapasitas : 100;
+}
+kelas {
+	kode : 1;
+	matkul : if006;
+	kapasitas : 100;
+}
+kelas {
+	kode : 1;
+	matkul : if007;
+	kapasitas : 100;
+}
+kelas {
+	kode : 1;
+	matkul : if008;
+	kapasitas : 100;
+}
+kelas {
+	kode : 1;
+	matkul : if009;
+	kapasitas : 100;
+}
+kelas {
+	kode : 1;
+	matkul : if010;
+	kapasitas : 100;
+}

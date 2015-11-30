@@ -40,6 +40,7 @@ public class Data {
 		// harusnya dari dsl
 		listMatkul.get(3).addPrasyarat(listMatkul.get(0));
 		listMatkul.get(3).addPrasyarat(listMatkul.get(1));
+		getMatkulbyName("if004").addPrasyarat(getMatkulbyName("if001"));
 
 		listMatkul.get(6).addPrasyarat(listMatkul.get(3));
 
