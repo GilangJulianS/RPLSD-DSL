@@ -1,5 +1,8 @@
 package parser;
 
+import grammar.Checker;
+import ontopt.pen.GrammarException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +12,12 @@ import java.util.Scanner;
  * Created by gilang on 30/11/2015.
  */
 public class DSLParser {
+
     private List<String> lines;
-    private List<matkul> matkulList;
-    private List<kelas> kelasList;
+    private List<MatkulHelper> matkulList;
+    private List<KelasHelper> kelasList;
     private int sksmax;
+    private static final String SPLIT_TOKEN = "\\W";
 
     public DSLParser() {
         lines = new ArrayList<>();
@@ -39,28 +44,39 @@ public class DSLParser {
                 int sks = 0;
                 boolean availability = false;
 
-                nama = lines.get(i+1).split("( )*:( )*")[1].trim();
-                String sPre = lines.get(i+2).split("( )*:( )*")[1].trim();
-                prereq = sPre.split(" ");
-                if(prereq.length==1 && prereq[0].equalsIgnoreCase("")) {
-                    prereq = new String[]{};
-                }
-                sks = Integer.parseInt(lines.get(i+3).split("( )*:( )*")[1].trim());
-                String sAv = lines.get(i+4).split("( )*:( )*")[1].trim();
-                if(sAv.equalsIgnoreCase("true")) {
-                    availability = true;
-                }
-                else if(sAv.equalsIgnoreCase("false")) {
-                    availability = false;
+                for(int j=1; j<5; j++) {
+                    String[] lineGroup = filterSplit(lines.get(i + j).split(SPLIT_TOKEN));
+                    if(lineGroup.length > 1) {
+                        if (lineGroup[0].equals("nama"))
+                            nama = lineGroup[1];
+                        if (lineGroup[0].equals("prereq")) {
+                            prereq = new String[lineGroup.length - 1];
+                            for(int x=1; x<lineGroup.length; x++){
+                                prereq[x-1] = lineGroup[x];
+                            }
+                        }
+                        if (lineGroup[0].equals("sks"))
+                            sks = Integer.parseInt(lineGroup[1]);
+                        if (lineGroup[0].equals("available")) {
+                            String sAv = lineGroup[1];
+                            if (sAv.equalsIgnoreCase("true")) {
+                                availability = true;
+                            } else if (sAv.equalsIgnoreCase("false")) {
+                                availability = false;
+                            }
+                        }
+                    }
                 }
 
-                matkul m = new matkul(nama,prereq,sks,availability);
+                MatkulHelper m = new MatkulHelper(nama,prereq,sks,availability);
                 matkulList.add(m);
                 i+=4;
             }
             //parse jumlah sks
             else if(currentLine.length()>=6 && currentLine.substring(0,6).equalsIgnoreCase("sksmax")) {
-                sksmax = Integer.parseInt(currentLine.split("( )*:( )*")[1].trim());
+                String[] lineGroup = filterSplit(currentLine.split(SPLIT_TOKEN));
+                if(lineGroup.length > 1)
+                    sksmax = Integer.parseInt(lineGroup[1]);
             }
             //parse kelas
             else if(currentLine.length()>=5 && currentLine.substring(0,5).equalsIgnoreCase("kelas")) {
@@ -68,11 +84,19 @@ public class DSLParser {
                 String matkul = "";
                 int kapasitas = 0;
 
-                kode = lines.get(i+1).split("( )*:( )*")[1].trim();
-                matkul = lines.get(i+2).split("( )*:( )*")[1].trim();
-                kapasitas = Integer.parseInt(lines.get(i+3).split("( )*:( )*")[1].trim());
+                for(int j=1; j<4; j++) {
+                    String[] lineGroup = filterSplit(lines.get(i + j).split(SPLIT_TOKEN));
+                    if(lineGroup.length > 1) {
+                        if (lineGroup[0].equals("kode"))
+                            kode = lineGroup[1];
+                        if (lineGroup[0].equals("matkul"))
+                            matkul = lineGroup[1];
+                        if (lineGroup[0].equals("kapasitas"))
+                            kapasitas = Integer.parseInt(lineGroup[1]);
+                    }
+                }
 
-                kelas k = new kelas(kode,matkul,kapasitas);
+                KelasHelper k = new KelasHelper(kode,matkul,kapasitas);
                 kelasList.add(k);
                 i+=3;
             }
@@ -99,20 +123,20 @@ public class DSLParser {
                 "\tpublic int sksmax;\n" +
                 "\n" +
                 "\tpublic Data(){\n" +
-                "\t\tlistMatkul = createMatkulList();\n" +
-                "\t\tlistKelas = createKelasList();\n" +
+                "\t\tcreateMatkulList();\n" +
+                "\t\tcreateKelasList();\n" +
                 "\t\tsksmax = "+sksmax+";\n" +
                 "\t}\n" +
                 "\n" +
-                "\tprivate List<MataKuliah> createMatkulList(){\n" +
-                "\t\tList<MataKuliah> listMatkul = new ArrayList<>();\n" +
+                "\tprivate void createMatkulList(){\n" +
+                "\t\tlistMatkul = new ArrayList<>();\n" +
                 "\n" +
                 "\t\t//available / ga harusnya dari dsl\n";
 
-        //add matkul & prereqnya
+        //add MatkulHelper & prereqnya
         String line = "";
         for(int i=0; i<matkulList.size(); i++) {
-            matkul m = matkulList.get(i);
+            MatkulHelper m = matkulList.get(i);
             line = "\t\tlistMatkul.add(new MataKuliah(\""+m.nama+"\", "+m.sks+", "+m.availability+"));\n";
             output += line;
             if(m.prereq.length>0) {
@@ -124,24 +148,21 @@ public class DSLParser {
         }
 
         output += "\n" +
-                "\t\treturn listMatkul;\n" +
                 "\t}\n" +
                 "\n" +
-                "\tprivate List<Kelas> createKelasList(){\n" +
+                "\tprivate void createKelasList(){\n" +
                 "\n" +
-                "\t\t//defining class capacity\n" +
-                "\t\tList<Kelas> listKelas = new ArrayList<>();\n" +
+                "\t\tlistKelas = new ArrayList<>();\n" +
                 "\n";
 
-        //add kelas
+        //add KelasHelper
         for(int i=0; i<kelasList.size(); i++) {
-            kelas k = kelasList.get(i);
+            KelasHelper k = kelasList.get(i);
             line = "\t\tlistKelas.add(new Kelas(getMatkulbyName(\""+k.matkul+"\"), "+k.kode+", "+k.kapasitas+"));\n";
             output += line;
         }
 
         output += "\n" +
-                "\t\treturn listKelas;\n" +
                 "\t}\n" +
                 "\n" +
                 "\tpublic MataKuliah getMatkulbyName(String namaMatkul){\n" +
@@ -160,8 +181,26 @@ public class DSLParser {
         ps.close();
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public String[] filterSplit(String[] strings){
+        List<String> list = new ArrayList<>();
+        for(int i=0; i<strings.length; i++){
+            if(strings[i].length() > 0)
+                list.add(strings[i]);
+        }
+        String[] retStrings = new String[list.size()];
+        for(int i=0; i<list.size(); i++){
+            retStrings[i] = list.get(i);
+        }
+        return retStrings;
+    }
+
+    public static void main(String[] args) throws IOException, GrammarException {
         DSLParser d = new DSLParser();
-        d.generate("test.frs","test.java");
+        Checker checker = new Checker(args[0]);
+        if(checker.check(args[1])) {
+            d.generate(args[1], "Data.java");
+        }else{
+            System.out.println("Terdapat kesalahan grammar pada file input");
+        }
     }
 }

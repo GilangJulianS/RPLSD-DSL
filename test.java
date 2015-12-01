@@ -16,13 +16,13 @@ public class Data {
 	public int sksmax;
 
 	public Data(){
-		createMatkulList();
-		createKelasList();
+		listMatkul = createMatkulList();
+		listKelas = createKelasList();
 		sksmax = 22;
 	}
 
-	private void createMatkulList(){
-		listMatkul = new ArrayList<>();
+	private List<MataKuliah> createMatkulList(){
+		List<MataKuliah> listMatkul = new ArrayList<>();
 
 		//available / ga harusnya dari dsl
 		listMatkul.add(new MataKuliah("if001", 2, true));
@@ -40,16 +40,14 @@ public class Data {
 		listMatkul.add(new MataKuliah("if010", 4, true));
 		getMatkulbyName("if010").addPrasyarat(getMatkulbyName("if003"));
 		getMatkulbyName("if010").addPrasyarat(getMatkulbyName("if007"));
-		listMatkul.add(new MataKuliah("if011", 4, true));
-		getMatkulbyName("if011").addPrasyarat(getMatkulbyName("if010"));
-		getMatkulbyName("if011").addPrasyarat(getMatkulbyName("if001"));
-		getMatkulbyName("if011").addPrasyarat(getMatkulbyName("if002"));
 
+		return listMatkul;
 	}
 
-	private void createKelasList(){
+	private List<Kelas> createKelasList(){
 
-		listKelas = new ArrayList<>();
+		//defining class capacity
+		List<Kelas> listKelas = new ArrayList<>();
 
 		listKelas.add(new Kelas(getMatkulbyName("if001"), 1, 50));
 		listKelas.add(new Kelas(getMatkulbyName("if001"), 2, 50));
@@ -62,8 +60,8 @@ public class Data {
 		listKelas.add(new Kelas(getMatkulbyName("if008"), 1, 100));
 		listKelas.add(new Kelas(getMatkulbyName("if009"), 1, 100));
 		listKelas.add(new Kelas(getMatkulbyName("if010"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if011"), 1, 90));
 
+		return listKelas;
 	}
 
 	public MataKuliah getMatkulbyName(String namaMatkul){
