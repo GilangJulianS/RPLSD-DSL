@@ -5,11 +5,14 @@ S ::= OBJECT <&> OBJECT
 
 OBJECT ::= CLASSTYPE <&> OPENING <&> ATTRIBUTE <&> CLOSING
 OBJECT ::= CLASSTYPE <&> SIGN <&> VALUE <&> END
+
 ATTRIBUTE ::= ATTRIBUTENAME <&> SIGN <&> VALUE <&> END
 ATTRIBUTE ::= ATTRIBUTENAME <&> SIGN <&> VALUE <&> END <&> ATTRIBUTE
+
 CLASSTYPE ::= matkul
 CLASSTYPE ::= sksmax
 CLASSTYPE ::= kelas
+
 ATTRIBUTENAME ::= nama
 ATTRIBUTENAME ::= prereq
 ATTRIBUTENAME ::= sks
@@ -17,11 +20,13 @@ ATTRIBUTENAME ::= available
 ATTRIBUTENAME ::= kode
 ATTRIBUTENAME ::= matkul
 ATTRIBUTENAME ::= kapasitas
-OPENING ::= {
-CLOSING ::= }
-SIGN ::= :
+
 VALUE ::= <?>
 VALUE ::= <>
 VALUE ::= <?> <&> SEPARATOR <&> VALUE
+
+OPENING ::= {
+CLOSING ::= }
+SIGN ::= :
 SEPARATOR ::= ,
 END ::= ;

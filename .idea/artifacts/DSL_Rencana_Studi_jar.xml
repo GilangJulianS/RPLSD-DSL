@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="DSL-Rencana Studi:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DSL_Rencana_Studi_jar</output-path>
+    <root id="archive" name="DSL-Rencana Studi.jar">
+      <element id="module-output" name="DSL-Rencana Studi" />
+    </root>
+  </artifact>
+</component>

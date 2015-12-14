@@ -18,32 +18,13 @@ public class Data {
 	public Data(){
 		createMatkulList();
 		createKelasList();
-		sksmax = 22;
+		sksmax = 0;
 	}
 
 	private void createMatkulList(){
 		listMatkul = new ArrayList<>();
 
 		//available / ga harusnya dari dsl
-		listMatkul.add(new MataKuliah("if001", 2, true));
-		listMatkul.add(new MataKuliah("if002", 1, true));
-		listMatkul.add(new MataKuliah("if003", 2, true));
-		listMatkul.add(new MataKuliah("if004", 3, true));
-		getMatkulbyName("if004").addPrasyarat(getMatkulbyName("if001"));
-		getMatkulbyName("if004").addPrasyarat(getMatkulbyName("if002"));
-		listMatkul.add(new MataKuliah("if005", 3, true));
-		listMatkul.add(new MataKuliah("if006", 3, true));
-		listMatkul.add(new MataKuliah("if007", 4, true));
-		getMatkulbyName("if007").addPrasyarat(getMatkulbyName("if004"));
-		listMatkul.add(new MataKuliah("if008", 2, true));
-		listMatkul.add(new MataKuliah("if009", 1, true));
-		listMatkul.add(new MataKuliah("if010", 4, true));
-		getMatkulbyName("if010").addPrasyarat(getMatkulbyName("if003"));
-		getMatkulbyName("if010").addPrasyarat(getMatkulbyName("if007"));
-		listMatkul.add(new MataKuliah("if011", 4, true));
-		getMatkulbyName("if011").addPrasyarat(getMatkulbyName("if010"));
-		getMatkulbyName("if011").addPrasyarat(getMatkulbyName("if001"));
-		getMatkulbyName("if011").addPrasyarat(getMatkulbyName("if002"));
 
 	}
 
@@ -51,18 +32,6 @@ public class Data {
 
 		listKelas = new ArrayList<>();
 
-		listKelas.add(new Kelas(getMatkulbyName("if001"), 1, 50));
-		listKelas.add(new Kelas(getMatkulbyName("if001"), 2, 50));
-		listKelas.add(new Kelas(getMatkulbyName("if002"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if003"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if004"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if005"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if006"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if007"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if008"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if009"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if010"), 1, 100));
-		listKelas.add(new Kelas(getMatkulbyName("if011"), 1, 90));
 
 	}
 

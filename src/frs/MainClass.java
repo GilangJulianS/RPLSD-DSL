@@ -21,15 +21,24 @@ public class MainClass {
         Data data = new Data();
         Validator validator = new Validator(data);
 
+        Mahasiswa mahasiswa = getMahasiswaFromDB(data);
+        List<MataKuliah> pilihan = getPilihanMahasiswa(data);
+
+        System.out.println(validator.validate(mahasiswa, pilihan));
+    }
+
+    public static Mahasiswa getMahasiswaFromDB(Data data){
         Mahasiswa mahasiswa = new Mahasiswa();
         mahasiswa.addMatkulSelesai(data.getMatkulbyName("if001"));
         mahasiswa.addMatkulSelesai(data.getMatkulbyName("if002"));
         mahasiswa.addMatkulSelesai(data.getMatkulbyName("if003"));
+        return mahasiswa;
+    }
 
+    public static List<MataKuliah> getPilihanMahasiswa(Data data){
         List<MataKuliah> pilihan = new ArrayList<>();
         pilihan.add(data.getMatkulbyName("if004"));
         pilihan.add(data.getMatkulbyName("if010"));
-
-        System.out.println(validator.validate(mahasiswa, pilihan));
+        return pilihan;
     }
 }
